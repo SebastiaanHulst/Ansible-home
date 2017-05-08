@@ -1,0 +1,13 @@
+---
+
+-  name: Installing some default apps
+   apt:
+     name: "{{ item }}"
+     state: present
+     update-cache: yes
+     cache_valid_time: "{{ apt_cache_valid_time }}"
+   become: yes
+   with_items:
+       - nmon
+       - ncdu
+       - iotop

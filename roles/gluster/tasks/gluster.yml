@@ -1,0 +1,65 @@
+---
+
+- name: Install glusterfs
+  apt:
+    name: glusterfs-server
+    state: present
+    update_cache: yes
+    cache_valid_time: "{{ apt_cache_valid_time }}"
+  tags: gfs_server
+
+- name: create dir for mounting the gluster bricks
+  file:
+    path: "{{ item.mount_brick }}/{{ item.brick }}"
+    state: directory
+  with_items: "{{ gluster }}"
+  tags: gfs_add_gluster_vol
+
+- name: Create gluster volumes
+  gluster_volume: state=present name={{ item.volume_name }} brick=/data/glusterfs/{{ item.brick }} transport=tcp replicas=2 cluster={{ item.primary_node }}.{{ internal_domain }},{{ item.secondary_node }}.{{ internal_domain }} force=yes
+  become: yes
+  when: ansible_nodename == "{{ primary_node }}"
+  with_items: "{{ gluster }}"
+  tags: gfs_add_gluster_vol
+
+- name: start gluster volumes
+  gluster_volume: state=started name={{ item.volume_name }}
+  with_items: "{{ gluster }}"
+  tags: gfs_add_gluster_vol
+
+- name: create dir for mounting the gluster bricks
+  file:
+    path: "{{ item.mount_point }}"
+    state: directory
+  with_items: "{{ gluster }}"
+  tags: gfs_add_gluster_vol
+
+- name: Add Mount to fstab gluster volume
+  mount:
+    name: "{{ item.mount_point }}"
+    src: localhost:/{{ item.volume_name }}
+    fstype: glusterfs
+    state: present
+  tags: gfs_add_gluster_vol
+  with_items: "{{ gluster }}"
+  #tags: gfs_mount
+
+- name: mount all
+  command: mount -a
+  args:
+    warn: no
+#  when: "{{ ansible_mounts.mount }}" != "{{ item.mount_point }}"
+  with_items: "{{ gluster }}"
+  become: true
+  tags: gfs_mount_all
+
+#- name: Mount the gluster volumes
+#  shell: mount -t glusterfs localhost:/{{ item.gluster_volume }} /media/glusterfs/{{ item.zfs_volume }}/{{ item.gluster_brick }}
+#  mount:
+#    name: /media/glusterfs/{{ item.volume_name }}/{{ item.brick }}
+#    src: glusterfs localhost:/{{ item.volume_name }}
+#    fstype: glusterfs
+#    state: present
+#  tags: gfs_add_gluster_vol
+#  tags: gfs_mount
+#  with_items: "{{ gluster }}"

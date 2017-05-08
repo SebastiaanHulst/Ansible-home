@@ -1,0 +1,22 @@
+---
+
+- name: Install aws cli to sync between s3/backup
+  apt: name={{ item }}
+   update_cache=yes
+  with_items:
+      - awscli
+
+- name: Placing s3 sync script
+  template: src={{ s3_sync }} dest=/opt/jfrog/{{ s3_sync }} mode=0744 owner=artifactory
+  sudo: yes
+
+- name: Setting correct directory and guid so wwww-data remains the group owner of the files
+  file: path=/opt/jfrog/backups/ owner=artifactory group=artifactory  mode=2744 state=directory 
+
+- name: Create crontab entry for syncing S3 with local web directory
+  cron: name="Sync s3 with backupdir" special_time={{ artifactory_cron_moment }} job="/opt/jfrog/{{ s3_sync }} 1>&2 /dev/null" user="artifactory"
+
+- name: First s3 to local web directory sync
+  shell: /opt/jfrog/{{ s3_sync }}
+  sudo: yes
+

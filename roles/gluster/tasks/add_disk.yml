@@ -1,0 +1,82 @@
+---
+
+- name: Install lvm, boto and zfsutils-linux packages
+  apt: >
+    name={{ item }}
+    state=present
+  with_items:
+    - lvm2
+    - python-boto
+    - zfsutils-linux
+
+#- name: add volume to instance
+##  local_action:
+##    module=ec2_vol
+#  ec2_vol:
+#    aws_access_key="AKIAIRGOQB"
+#    aws_secret_key="Vii25d4MPF2AI"
+#    region="eu-west-1"
+#    device_name={{ item.device_name }}
+#    instance={{ item.instance }}
+#    volume_type={{ item.volume_type }}
+#    state=present
+#    volume_size={{ item.volume_size }}
+#  with_items: gluster_volume_items
+
+- name: create zfs datapool
+  command: zpool create -f datastore raidz /dev/xvdb /dev/xvdc /dev/xvdd  creates=/datastore
+
+#not ready yet
+#- name: create filesystem in datapool
+#  shell: zfs create -o mountpoint={{ item.zfs_mount }}/{{ item.gluster_brick }} { item.zfs_pool }}/{{ item.zfs_volume }}  creates={{ item.zfs_mount }}/{{ item.gluster_brick }}
+#  with_items: gluster_zfs
+
+#gluster_zfs:
+#  - zfs_pool: datastore
+#    zfs_volume: dbs
+#    zfs_mount: /data/zfs/dbs
+#    gluster_volume: volume01
+#    gluster_brick: zfs_brick01
+
+
+#- name: Create VG
+#  lvg: >
+#    pvs={{ item.vg_gluster }}
+#    vg=vg_gluster
+#    state=present
+#  with_items: gluster_vg_pvs
+
+#- name: create lv
+#  lvol: >
+#    vg={{ item.vg_name }}
+#    lv={{ item.lv_name }}
+#    size={{ item.lv_size }}
+#    state=present
+#    force=yes
+#  with_items: gluster_lvm
+
+#- name: create filesystem
+#  filesystem: >
+#    dev=/dev/mapper/{{ item.vg_name }}-{{ item.lv_name }}
+#    fstype=ext4
+#  with_items: gluster_lvm
+
+#- name: Resize fs
+#  shell: /sbin/resize2fs /dev/mapper/{{ item.vg_name }}-{{ item.lv_name }}
+#  with_items: gluster_lvm
+
+#- name: create mount point
+#  file: >
+#    path={{ item.lv_mount }}
+#    state=directory
+#  with_items: gluster_lvm
+
+#- name: add lv in fstab
+#  mount: >
+#    state=mounted
+#    fstype=ext4
+#    name={{ item.lv_mount }}
+#    src=/dev/mapper/{{ item.vg_name }}-{{ item.lv_name }}
+#    opts=noatime,nodiratime
+#  with_items: gluster_lvm
+

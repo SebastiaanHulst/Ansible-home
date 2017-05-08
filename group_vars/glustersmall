@@ -1,0 +1,10 @@
+
+
+gluster:
+  - volume_name: small
+    brick: brick1
+    primary_node: node06
+    secondary_node: node07
+    mount_brick: /data/glusterfs/
+    mount_point: /media/glusterfs
+    
