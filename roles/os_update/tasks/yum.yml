@@ -1,0 +1,8 @@
+---
+
+- name: upgrade all packages
+  yum:
+    name: '*'
+    state: latest
+    cache_valid_time: "{{ apt_cache_valid_time | default(3600)}}"
+  become: true
