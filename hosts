@@ -1,22 +1,56 @@
+# This is the default ansible 'hosts' file.
+#
+# It should live in /etc/ansible/hosts
+#
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
 
-[all:children]
-kubemaster
-nodes
+# Ex 1: Ungrouped hosts, specify before any group headers.
 
-[kubemaster]
-kubemaster.lan
+## green.example.com
+## blue.example.com
+## 192.168.100.1
+## 192.168.100.10
 
-[nodes]
-node0[1:8].lan
+# Ex 2: A collection of hosts belonging to the 'webservers' group
 
-[kubenodes]
-node0[1:5].lan
+## [webservers]
+## alpha.example.org
+## beta.example.org
+## 192.168.1.100
+## 192.168.1.110
 
-[glusternodes]
-node0[6:8].lan
+# If you have multiple hosts following a pattern you can specify
+# them like this:
 
-[glustersmall]
-node0[6:7].lan
+## www[001:006].example.com
 
-[glusterlarge]
-node08.lan
+# Ex 3: A collection of database servers in the 'dbservers' group
+
+## [dbservers]
+## 
+## db01.intranet.mydomain.net
+## db02.intranet.mydomain.net
+## 10.25.1.56
+## 10.25.1.57
+
+# Here's another example of host ranges, this time there are no
+# leading 0s:
+
+## db-[99:101]-node.example.com
+
+[z600]
+localhost
+
+[raspberries]
+192.168.178.57
+192.168.178.62
+
+## [nas]
+## 192.168.178.11
+
+[webs]
+192.168.178.62
