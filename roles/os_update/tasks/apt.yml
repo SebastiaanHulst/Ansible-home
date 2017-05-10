@@ -1,6 +1,6 @@
 ---
 
-- name: Update all packages to the latest version
+- name: update all Debian packages
   apt:
     update_cache: yes
     upgrade: dist 

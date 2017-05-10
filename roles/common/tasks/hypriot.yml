@@ -6,42 +6,4 @@
     regexp: '^dtoverlay'
     line: "dtoverlay=sdhost,overclock_50=100\n"
   become: true
-
-- name: change password for the default pirate user
-  lineinfile:
-    name: /etc/shadow
-    regexp: '^pirate'
-    #line: "pirate:$6$LGcOd/RX$JRB2r4rYqKPBob8GvSFmg7qt0uY0zr64FtK9pkZULSztJcURKoD3AdOAvYwQzaWuRyceN5VK7GUjQj2RZTBaV0:17031:0:99999:7:::"
-    line: "pirate:$6$/nhB.Xw8h/1AlLbX$Hp.LLvYaUfef62NapAHdyPNwSy33sGd0RlkJr9KGZ/PhAlDR1ssNTrFtHY1x9mBtQ8IwZm4SMpt8YM7qYT0ku1:17031:0:99999:7:::"
-  become: true
-
-- name: copy temp measuring script
-  copy: 
-    src: temp.sh
-    dest: /home/pirate/temp.sh
-    owner: pirate
-    group: pirate
-    mode: 0764
-  tags: hypriot_temp
-
-- name: add hdparm for the spinning down idle usb enclosure
-  apt:
-    name: hdparm
-    update_cache: yes
-    cache_valid_time: "{{ apt_cache_valid_time }}"
-    state: present
-  when: ansible_nodename == "node08"
-  become: yes
-  tags: hypriot_hdparm
-
-- name: copy the spindown config for usb enclosure
-  copy: 
-    src: hdparm.conf
-    dest: /etc/hdparm.conf
-    owner: root
-    group: root
-    mode: 0644
-  become: yes
-  when: ansible_nodename == "node08"
-  tags: hypriot_hdparmconfig
-  notify: restart_hdparm
+  tags: sd_overclock
