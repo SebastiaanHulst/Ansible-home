@@ -4,5 +4,4 @@
   roles:
      - common
 
-- include: playbooks/gluster.yml
 - include: playbooks/os_update.yml
