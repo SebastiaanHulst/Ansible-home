@@ -1,8 +1,0 @@
----
-
-- hosts: glusternodes:glustersmall
-  gather_facts: False
-  max_fail_percentage: 0
-  become: true
-  roles:
-    - { role: gluster, tags: ["gluster"] }

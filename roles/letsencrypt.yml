@@ -1,7 +1,0 @@
----
-- hosts: kubemaster.lan
-  #connection: local
-  gather_facts: true
-  max_fail_percentage: 0
-  roles:
-    - { role: letsencrypt, tags: ["letsencrypt"] }

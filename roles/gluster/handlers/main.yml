@@ -1,3 +1,0 @@
----
-#- name: restart crowd
-#  service: name=crowd state=restarted

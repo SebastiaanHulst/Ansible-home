@@ -1,9 +1,0 @@
----
-
-- name: Install glusterfs client
-  apt:
-    name: glusterfs-client
-    state: present
-    update_cache: yes
-    cache_valid_time: "{{ apt_cache_valid_time }}"
-  tags: glusterfs_client
