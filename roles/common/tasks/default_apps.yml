@@ -1,13 +1,25 @@
 ---
 
--  name: Installing some default apps
+-  name: Installing some default apps with apt
    apt:
      name: "{{ item }}"
      state: present
      update-cache: yes
      cache_valid_time: "{{ apt_cache_valid_time }}"
    become: yes
+   when: ansible_os_family == "Debian"
    with_items:
        - nmon
+       - ncdu
+       - iotop
+
+-  name: Installing some default apps with yum
+   yum:
+      name: "{{ item }}"
+      state: present
+   become: yes
+   when: ansible_os_family == "RedHat"
+   with_items:
+       - elmon
        - ncdu
        - iotop

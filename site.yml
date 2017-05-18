@@ -5,3 +5,4 @@
      - common
 
 - include: playbooks/os_update.yml
+- include: playbooks/webs.yml
