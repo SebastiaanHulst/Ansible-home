@@ -1,0 +1,57 @@
+---
+
+- name: install nginx
+  apt:
+    name: "{{ item }}"
+    state: present
+    update-cache: yes
+    cache_valid_time: "{{ apt_cache_valid_time }}"
+  become: yes
+  with_items:
+      - nginx
+
+- name: transfer nginx templates
+  template:
+    src: blaargh.com.j2
+    dest: /etc/nginx/sites-available/{{ main_website }}
+    backup: yes
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  notify: restart_nginx
+
+- name: create symlink
+  file:
+    src: /etc/nginx/sites-available/{{ main_website }}
+    dest: /etc/nginx/sites-enabled/{{ main_website }}
+    state: link
+  become: yes
+  notify: restart_nginx
+#  tags: webs_addsymlink
+
+- name: remove default symlink
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  become: yes
+  notify: restart_nginx
+#  tags: webs_rmsymlink
+
+- name: create doc root
+  file:
+    path: /var/www/html/{{ main_website }}
+    state: directory
+    mode: 0755
+  become: yes
+  notify: restart_nginx
+#  tags: webs_docroot
+
+- name: transfer webs content
+  git:
+    repo: 'https://github.com/SebastiaanHulst/webs.git'
+    dest: /var/www/html/{{ main_website }}
+    accept_hostkey: yes
+  become: yes
+  notify: restart_nginx
+#  tags: webs_gitpull

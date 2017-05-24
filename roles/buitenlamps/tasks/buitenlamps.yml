@@ -1,0 +1,9 @@
+---
+
+- name: transfer buitenlamps content
+  git:
+    repo: 'https://github.com/SebastiaanHulst/buitenlamp.git'
+    dest: /opt/buitenlamp
+    accept_hostkey: yes
+  become: yes
+#  tags: buitenlamps_gitpull
