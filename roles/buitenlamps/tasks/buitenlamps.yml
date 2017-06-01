@@ -3,7 +3,17 @@
 - name: transfer buitenlamps content
   git:
     repo: 'https://github.com/SebastiaanHulst/buitenlamp.git'
+    force: yes
     dest: /opt/buitenlamp
     accept_hostkey: yes
   become: yes
-#  tags: buitenlamps_gitpull
+  tags: buitenlamps_gitpull
+
+- name: change permissions on buitenlamp.sh
+  file:
+    path: /opt/buitenlamp/buitenlamp.sh
+    owner: root
+    group: root
+    mode: 0755
+  become: yes
+#  tags: buitenlamps_setperm

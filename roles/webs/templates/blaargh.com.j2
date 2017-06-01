@@ -1,13 +1,20 @@
 server {
-       listen 80;
-       listen [::]:80;
+	listen 80;
+	listen [::]:80;
 
-       server_name {{ main_website }} www.{{ main_website }};
+        server_name {{ main_website }} www.{{ main_website }};
+ 
+        root /var/www/html/{{ main_website }};
+        index index.html;
 
-       root /var/www/html/{{ main_website }};
-       index index.html;
+        location /Domoticz/
+        {
+                proxy_pass http://192.168.178.57:8080/;
+        proxy_buffering off;
+        }
 
-       location / {
-               try_files $uri $uri/ =404;
-       }
+        location /
+        {
+                try_files $uri $uri/ =404;
+        }
 }

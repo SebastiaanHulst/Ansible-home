@@ -9,6 +9,7 @@
   become: yes
   with_items:
       - nginx
+  tags: nginx_install
 
 - name: transfer nginx templates
   template:
@@ -20,6 +21,7 @@
     mode: 0644
   become: yes
   notify: restart_nginx
+  tags: nginx_conf
 
 - name: create symlink
   file:
@@ -28,7 +30,7 @@
     state: link
   become: yes
   notify: restart_nginx
-#  tags: webs_addsymlink
+  tags: webs_addsymlink
 
 - name: remove default symlink
   file:
@@ -36,7 +38,7 @@
     state: absent
   become: yes
   notify: restart_nginx
-#  tags: webs_rmsymlink
+  tags: webs_rmsymlink
 
 - name: create doc root
   file:
@@ -45,7 +47,7 @@
     mode: 0755
   become: yes
   notify: restart_nginx
-#  tags: webs_docroot
+  tags: webs_docroot
 
 - name: transfer webs content
   git:
@@ -54,4 +56,4 @@
     accept_hostkey: yes
   become: yes
   notify: restart_nginx
-#  tags: webs_gitpull
+  tags: webs_gitpull
