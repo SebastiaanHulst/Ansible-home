@@ -16,6 +16,7 @@
        - git
        - unattended-upgrades
        - apt-listchanges
+   tags: apt-default-aps
 
 -  name: enable automatic upgrades
    when: ansible_os_family == "Debian"
@@ -25,6 +26,7 @@
      regexp: '^//Unattended-Upgrade::MailOnlyOnError'
      line: 'Unattended-Upgrade::MailOnlyOnError "true";' 
      backrefs: yes
+   tags: apt-automatic-upgrades
 
 -  name: Installing some default apps with yum
    yum:
@@ -38,3 +40,4 @@
        - iotop
        - sl
        - git
+   tags: yum-default-apps
