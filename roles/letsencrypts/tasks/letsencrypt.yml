@@ -1,0 +1,52 @@
+---
+
+- name: install letsencrypt
+  apt: 
+    name: letsencrypt
+    state: latest
+    default_release: jessie-backports
+    force: yes
+  become: yes
+
+- name: create letsencrypt directory
+  file: name=/var/www/letsencrypt state=directory
+  become: yes
+
+- name: Install nginx site for letsencrypt requests
+  template:
+    src: templates/nginx-http.j2
+    dest: /etc/nginx/sites-enabled/http
+  become: yes
+
+- name: Reload nginx to activate letsencrypt site
+  service: name=nginx state=restarted
+  become: yes
+
+- name: Create letsencrypt certificate
+  shell: letsencrypt certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ main_website }}
+  args:
+    creates: /etc/letsencrypt/live/{{ main_website }}
+  become: yes
+
+- name: Generate dhparams
+  shell: openssl dhparam -out /etc/nginx/dhparams.pem 2048
+  args:
+    creates: /etc/nginx/dhparams.pem
+  become: yes
+
+- name: Install nginx site for specified site
+  template:
+    src: templates/nginx-le.j2
+    dest: /etc/nginx/sites-enabled/le
+  become: yes
+
+- name: Reload nginx to activate specified site
+  service: name=nginx state=restarted
+  become: yes
+
+- name: Add letsencrypt cronjob for cert renewal
+  cron:
+    name: letsencrypt_renewal
+    special_time: weekly
+    job: letsencrypt --renew certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ main_website }} && service nginx reload
+  become: yes
