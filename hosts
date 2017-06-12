@@ -1,6 +1,6 @@
 
 [z600]
-localhost
+localhost ansible_connection=local
 
 [raspberries]
 192.168.178.57
