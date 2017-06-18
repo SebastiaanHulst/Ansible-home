@@ -1,5 +1,4 @@
 ---
-
 - name: install nginx
   apt:
     name: "{{ item }}"
@@ -57,3 +56,4 @@
   become: yes
   notify: restart_nginx
   tags: webs-gitpull
+...

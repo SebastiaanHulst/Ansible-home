@@ -1,5 +1,4 @@
 ---
-
 - name: transfer buitenlamps content
   git:
     repo: 'https://github.com/SebastiaanHulst/buitenlamp.git'
@@ -17,3 +16,4 @@
     mode: 0755
   become: yes
 #  tags: buitenlamps_setperm
+...

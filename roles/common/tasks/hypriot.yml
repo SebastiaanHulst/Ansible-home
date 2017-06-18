@@ -1,5 +1,4 @@
 ---
-
 - name: add overclock line
   lineinfile:
     name: /boot/config.txt
@@ -7,3 +6,4 @@
     line: "dtoverlay=sdhost,overclock_50=100\n"
   become: true
   tags: sd_overclock
+...

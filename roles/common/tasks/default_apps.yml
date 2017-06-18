@@ -1,5 +1,4 @@
 ---
-
 -  name: Installing some default apps with apt
    apt:
      name: "{{ item }}"
@@ -14,9 +13,10 @@
        - iotop
        - sl
        - git
+       - cpufrequtils
        - unattended-upgrades
        - apt-listchanges
-   tags: apt-default-aps
+   tags: apt-default-apps
 
 -  name: enable automatic upgrades
    when: ansible_os_family == "Debian"
@@ -41,3 +41,4 @@
        - sl
        - git
    tags: yum-default-apps
+...
