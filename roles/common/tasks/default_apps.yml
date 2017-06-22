@@ -16,6 +16,7 @@
        - cpufrequtils
        - unattended-upgrades
        - apt-listchanges
+       - golang
    tags: apt-default-apps
 
 -  name: enable automatic upgrades

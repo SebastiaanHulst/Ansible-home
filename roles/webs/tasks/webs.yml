@@ -8,6 +8,7 @@
   become: yes
   with_items:
       - nginx
+      - nginx-extras
   tags: nginx-install
 
 - name: transfer nginx templates

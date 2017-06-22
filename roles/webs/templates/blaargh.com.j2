@@ -13,6 +13,12 @@ server {
         proxy_buffering off;
         }
 
+        location /Prometheus/
+        {
+                proxy_pass http://192.168.178.62:9090/Prometheus/;
+        proxy_buffering off;
+        }
+
         location /
         {
                 try_files $uri $uri/ =404;

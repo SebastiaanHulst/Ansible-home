@@ -1,0 +1,14 @@
+---
+- name: check hdmi output status on raspberry pi
+  become: True
+  command: /usr/bin/tvservice -s
+  ignore_errors: yes
+  register: result
+  tags: hdmi-status
+
+- name: turn off hdmi output if on
+  become: True
+  command: /usr/bin/tvservice -o
+  when: "'[TV is off]' not in result.stdout"
+  tags: hdmi-off
+...
