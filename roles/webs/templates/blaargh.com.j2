@@ -15,7 +15,7 @@ server {
 
         location /Prometheus/
         {
-                proxy_pass http://192.168.178.62:9090/Prometheus/;
+                proxy_pass http://192.168.178.62:9090/;
         proxy_buffering off;
         }
 
@@ -24,3 +24,7 @@ server {
                 try_files $uri $uri/ =404;
         }
 }
+
+log_format mtail '$host $remote_addr - $remote_user [$time_local] '
+                 '"$request" $status $body_bytes_sent $request_time '
+                 '"$http_referer" "$http_user_agent" "$content_type"';

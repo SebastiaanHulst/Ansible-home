@@ -7,5 +7,4 @@
 - include: playbooks/os_update.yml
 - include: playbooks/webs.yml
 - include: playbooks/buitenlamps.yml
-- include: playbooks/prometheus.yml
 #- include: playbooks/letsencrypt.yml

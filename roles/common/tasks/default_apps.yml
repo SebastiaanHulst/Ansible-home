@@ -17,6 +17,7 @@
        - unattended-upgrades
        - apt-listchanges
        - golang
+       - vim
    tags: apt-default-apps
 
 -  name: enable automatic upgrades
@@ -41,5 +42,6 @@
        - iotop
        - sl
        - git
+       - golang
    tags: yum-default-apps
 ...

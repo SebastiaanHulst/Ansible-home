@@ -1,9 +1,0 @@
----
-
-- name: Install haproxy
-  apt: name=haproxy state=latest update_cache=yes
-
-- name: Copy config template
-  template:
-    src: haproxy.cfg.j2
-    dest: /etc/haproxy/haproxy.cfg
