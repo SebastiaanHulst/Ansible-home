@@ -15,6 +15,5 @@
     group: root
     mode: 0755
   become: yes
-  tags: buitenlamps_chmod
   tags: buitenlamps_setperm
 ...

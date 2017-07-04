@@ -18,6 +18,7 @@
        - apt-listchanges
        - golang
        - vim
+       - byobu
    tags: apt-default-apps
 
 -  name: enable automatic upgrades
@@ -43,5 +44,6 @@
        - sl
        - git
        - golang
+       - byobu
    tags: yum-default-apps
 ...
