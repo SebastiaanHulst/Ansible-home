@@ -13,9 +13,9 @@ server {
         proxy_buffering off;
         }
 
-        location /Prometheus/
+        location /openduty/
         {
-                proxy_pass http://192.168.178.62:9090/;
+                proxy_pass http://192.168.178.20:8000/;
         proxy_buffering off;
         }
 
