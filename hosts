@@ -5,16 +5,8 @@ localhost ansible_connection=local
 192.168.178.57
 192.168.178.62
 
-#[nas]
-#192.168.178.11
-
 [webs]
 192.168.178.62
 
-[letsencrypts]
-
 [buitenlamps]
 192.168.178.57
-
-[prometheus]
-192.168.178.62

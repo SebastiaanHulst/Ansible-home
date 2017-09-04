@@ -1,10 +1,17 @@
 ---
-- name: Installing the nfs client package
-  apt: name=nfs-common state=present update_cache=yes
+- name: Creating mountpoint for the nfs share
+  file: 
+    path: /nas
+    state: directory
+    mode: 777
+    owner: root
+    group: root
   become: yes
 
-- name: Creating mountpoint for the nfs share
-  file: path=/media/home_djieno state=directory mode=0755 owner=djieno group=djieno
-
-- name: Adding share to fstab
-  mount: name=/media/home_djieno src=nfs:/media/peer/home_djieno fstype=nfs state=present opts=_netdev,auto,nfsvers=3
+- name: map nfs share
+  mount:
+    src: 192.168.178.11:/volume1/data
+    name: /nas
+    fstype: nfs
+    state: mounted
+  become: yes

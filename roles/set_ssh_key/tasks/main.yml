@@ -1,0 +1,2 @@
+---
+- include: set_ssh_key.yml

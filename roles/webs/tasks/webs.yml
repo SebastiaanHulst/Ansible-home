@@ -1,60 +1,60 @@
 ---
-- name: install nginx
-  apt:
-    name: "{{ item }}"
-    state: present
-    update-cache: yes
-    cache_valid_time: "{{ apt_cache_valid_time }}"
-  become: yes
-  with_items:
-      - nginx
-      - nginx-extras
-  tags: nginx-install
-
-- name: transfer nginx templates
-  template:
-    src: blaargh.com.j2
-    dest: /etc/nginx/sites-available/{{ main_website }}
-    backup: yes
-    owner: root
-    group: root
-    mode: 0644
-  become: yes
-  notify: restart_nginx
-  tags: nginx-conf
-
-- name: create symlink
-  file:
-    src: /etc/nginx/sites-available/{{ main_website }}
-    dest: /etc/nginx/sites-enabled/{{ main_website }}
-    state: link
-  become: yes
-  notify: restart_nginx
-  tags: webs-addsymlink
-
-- name: remove default symlink
-  file:
-    path: /etc/nginx/sites-enabled/default
-    state: absent
-  become: yes
-  notify: restart_nginx
-  tags: webs-rmsymlink
-
-- name: create doc root
-  file:
-    path: /var/www/html/{{ main_website }}
-    state: directory
-    mode: 0755
-  become: yes
-  notify: restart_nginx
-  tags: webs-docroot
-
-- name: transfer webs content
-  git:
-    repo: 'https://github.com/SebastiaanHulst/webs.git'
-    dest: /var/www/html/{{ main_website }}
-    accept_hostkey: yes
-  become: yes
-  notify: restart_nginx
-  tags: webs-gitpull
+#- name: install nginx
+#  apt:
+#    name: "{{ item }}"
+#    state: present
+#    update-cache: yes
+#    cache_valid_time: "{{ apt_cache_valid_time }}"
+#  become: yes
+#  with_items:
+#      - nginx
+#      - nginx-extras
+#  tags: nginx-install
+#
+#- name: transfer nginx templates
+#  template:
+#    src: blaargh.com.j2
+#    dest: /etc/nginx/sites-available/{{ main_website }}
+#    backup: yes
+#    owner: root
+#    group: root
+#    mode: 0644
+#  become: yes
+#  notify: restart_nginx
+#  tags: nginx-conf
+#
+#- name: create symlink
+#  file:
+#    src: /etc/nginx/sites-available/{{ main_website }}
+#    dest: /etc/nginx/sites-enabled/{{ main_website }}
+#    state: link
+#  become: yes
+#  notify: restart_nginx
+#  tags: webs-addsymlink
+#
+#- name: remove default symlink
+#  file:
+#    path: /etc/nginx/sites-enabled/default
+#    state: absent
+#  become: yes
+#  notify: restart_nginx
+#  tags: webs-rmsymlink
+#
+#- name: create doc root
+#  file:
+#    path: /var/www/html/{{ main_website }}
+#    state: directory
+#    mode: 0755
+#  become: yes
+#  notify: restart_nginx
+#  tags: webs-docroot
+#
+#- name: transfer webs content
+#  git:
+#    repo: 'https://github.com/SebastiaanHulst/webs.git'
+#    dest: /var/www/html/{{ main_website }}
+#    accept_hostkey: yes
+#  become: yes
+#  notify: restart_nginx
+#  tags: webs-gitpull
 ...
