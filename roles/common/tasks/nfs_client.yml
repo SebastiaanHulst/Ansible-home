@@ -3,7 +3,7 @@
   file: 
     path: /nas
     state: directory
-    mode: 777
+    mode: 0775
     owner: root
     group: root
   become: yes

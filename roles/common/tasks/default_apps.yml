@@ -1,27 +1,40 @@
 ---
--  name: Installing some default apps with apt
-   apt:
-     name: "{{ item }}"
-     state: present
-     update-cache: yes
-     cache_valid_time: "{{ apt_cache_valid_time }}"
-   become: yes
-   when: ansible_os_family == "Debian"
-   with_items:
-       - nmon
-       - ncdu
-       - iotop
-       - sl
-       - git
-       - cpufrequtils
-       - unattended-upgrades
-       - apt-listchanges
-       - golang
-       - vim
-       - byobu
-       - links
-       - nfs-common
-   tags: apt-default-apps
+- name: install docker on docker hosts
+  hosts: localhost
+  apt:
+    name: "{{ item }}"
+    state: present
+    update-cache: yes
+    cache_valid_time: "{{ apt_cache_valid_time }}"
+  become: yes
+  when: ansible_os_family == "Debian"
+  with_items:
+        - docker.io
+
+- name: Installing some default apps with apt
+  apt:
+    name: "{{ item }}"
+    state: present
+    update-cache: yes
+    cache_valid_time: "{{ apt_cache_valid_time }}"
+  become: yes
+  when: ansible_os_family == "Debian"
+  with_items:
+      - nmon
+      - ncdu
+      - iotop
+      - sl
+      - git
+      - cpufrequtils
+      - unattended-upgrades
+      - apt-listchanges
+      - golang
+      - vim
+      - byobu
+      - links
+      - nfs-common
+      - procinfo
+  tags: apt-default-apps
 
 #-  name: enable automatic upgrades
 #   when: ansible_os_family == "Debian"
@@ -33,19 +46,19 @@
 #     backrefs: yes
 #   tags: apt-automatic-upgrades
 
--  name: Installing some default apps with yum
-   yum:
-      name: "{{ item }}"
-      state: present
-   become: yes
-   when: ansible_os_family == "RedHat"
-   with_items:
-       - elmon
-       - ncdu
-       - iotop
-       - sl
-       - git
-       - golang
-       - byobu
-   tags: yum-default-apps
+- name: Installing some default apps with yum
+  yum:
+     name: "{{ item }}"
+     state: present
+  become: yes
+  when: ansible_os_family == "RedHat"
+  with_items:
+      - elmon
+      - ncdu
+      - iotop
+      - sl
+      - git
+      - golang
+      - byobu
+  tags: yum-default-apps
 ...
