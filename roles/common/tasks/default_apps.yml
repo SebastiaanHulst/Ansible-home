@@ -1,16 +1,4 @@
 ---
-- name: install docker on docker hosts
-  hosts: localhost
-  apt:
-    name: "{{ item }}"
-    state: present
-    update-cache: yes
-    cache_valid_time: "{{ apt_cache_valid_time }}"
-  become: yes
-  when: ansible_os_family == "Debian"
-  with_items:
-        - docker.io
-
 - name: Installing some default apps with apt
   apt:
     name: "{{ item }}"

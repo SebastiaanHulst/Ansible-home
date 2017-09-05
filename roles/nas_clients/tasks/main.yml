@@ -1,0 +1,3 @@
+---
+- include: nas_clients.yml
+...

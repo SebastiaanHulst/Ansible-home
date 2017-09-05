@@ -1,0 +1,7 @@
+---
+- hosts: nas_clients
+  gather_facts: False
+  max_fail_percentage: 0
+  roles:
+    - { role: nas_clients, tags: ["nas_clients"] }
+...

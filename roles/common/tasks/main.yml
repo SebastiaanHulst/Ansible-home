@@ -4,4 +4,3 @@
   when: ansible_architecture == "armv6l"
 - include: hdmi.yml
   when: ansible_architecture == "armv6l"
-- include: nfs_client.yml

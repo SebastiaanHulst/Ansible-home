@@ -1,5 +1,4 @@
 ---
-#- hosts: all_hosts
 - hosts: all
   roles:
      - common
@@ -8,3 +7,5 @@
 - include: playbooks/webs.yml
 - include: playbooks/buitenlamps.yml
 - include: playbooks/docker.yml
+- include: playbooks/nas_clients.yml
+...
