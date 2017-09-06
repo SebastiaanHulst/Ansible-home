@@ -1,0 +1,16 @@
+---
+- name: check for Debian
+  assert:
+    that:
+      - "ansible_os_family == 'Debian'"
+#      - "ansible_userspace_architecture == 'x86_64'"
+    msg: "No Debian"
+
+- name: set vimrc
+  lineinfile:
+    dest: /etc/vim/vimrc
+    line: 'autocmd FileType yaml setlocal ts=2 sw=2 ai et'
+    create: yes
+    state: present
+  become: yes
+...

@@ -24,16 +24,6 @@
       - procinfo
   tags: apt-default-apps
 
-#-  name: enable automatic upgrades
-#   when: ansible_os_family == "Debian"
-#   become: yes
-#   lineinfile:
-#     path: /etc/apt/apt.conf.d/50unattended-upgrades
-#     regexp: '^//Unattended-Upgrade::MailOnlyOnError'
-#     line: 'Unattended-Upgrade::MailOnlyOnError "true";' 
-#     backrefs: yes
-#   tags: apt-automatic-upgrades
-
 - name: Installing some default apps with yum
   yum:
      name: "{{ item }}"

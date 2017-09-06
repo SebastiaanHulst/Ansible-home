@@ -1,6 +1,9 @@
 ---
 - include: default_apps.yml
+- include: vimrc.yml
+  when: ansible_os_family == "Debian"
 - include: hypriot.yml
   when: ansible_architecture == "armv6l"
 - include: hdmi.yml
   when: ansible_architecture == "armv6l"
+...
