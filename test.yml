@@ -1,0 +1,22 @@
+---
+- name: do internet tests
+  hosts: localhost
+  ignore_errors: yes
+
+  tasks:
+  - name: Check if github is reachable
+    command: ping -c 1 github.dom -q
+    register: result
+
+  - name: write test if github can be reached
+    file:
+      path: /tmp/oke
+      state: touch
+    when: result.rc == 0
+
+  - name: write test if github can not be reached
+    file:
+      path: /tmp/nok
+      state: touch
+    when: result.rc > 0
+...

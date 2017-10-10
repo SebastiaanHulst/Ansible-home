@@ -1,0 +1,5 @@
+# ignore retry-files
+*.retry
+
+# ignore test files
+test*

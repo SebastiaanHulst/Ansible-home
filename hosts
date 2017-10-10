@@ -17,3 +17,6 @@ localhost ansible_connection=local
 [nas_clients]
 localhost ansible_connection=local
 192.168.178.57
+
+[sabnzbds]
+localhost ansible_connection=local

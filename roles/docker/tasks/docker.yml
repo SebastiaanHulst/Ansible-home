@@ -9,4 +9,9 @@
   when: ansible_os_family == "Debian"
   with_items:
     - docker.io
+    - python-pip
+
+- name: install docker-py
+  pip:
+    name: docker-py
 ...

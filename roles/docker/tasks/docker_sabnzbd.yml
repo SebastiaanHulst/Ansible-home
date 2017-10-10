@@ -1,0 +1,22 @@
+- name: Create Directories
+  file:
+    name: "{{ item }}"
+    state: directory
+    owner: seabert
+    group: seabert
+    mode: 0775
+  with_items:
+    - "/data/sabnzbd/media"
+    - "/data/sabnzbd/data"
+  become: True
+
+- name: deploy sabnzbd
+  docker_container:
+    name: sabnzbd
+    image: sabnzbd/sabnzbd
+    state: started
+    volumes:
+      - "/data/sabnzbd/media:/media"
+      - "/data/sabnzbd/data:/datadir"
+    ports:
+      - "8080:8080"

@@ -22,6 +22,9 @@
       - links
       - nfs-common
       - procinfo
+      - xterm
+      - gcp
+      - curl
   tags: apt-default-apps
 
 - name: Installing some default apps with yum

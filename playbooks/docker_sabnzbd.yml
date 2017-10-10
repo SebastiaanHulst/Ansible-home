@@ -1,0 +1,7 @@
+---
+- hosts: sabnzbds
+  gather_facts: False
+  max_fail_percentage: 0
+  roles:
+    - { role: docker_sabnzbd, tags: ["docker_sabnzbd"] }
+...

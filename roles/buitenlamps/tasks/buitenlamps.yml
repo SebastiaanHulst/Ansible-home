@@ -1,4 +1,9 @@
 ---
+- name: Check if github is reachable
+  command: ping -c 1 github.com -q
+  register: result
+  ignore_errors: yes
+
 - name: transfer buitenlamps content
   git:
     repo: 'https://github.com/SebastiaanHulst/buitenlamp.git'
@@ -7,6 +12,7 @@
     accept_hostkey: yes
   become: yes
   tags: buitenlamps_gitpull
+  when: result.rc == 0
 
 - name: change permissions on buitenlamp.sh
   file:
