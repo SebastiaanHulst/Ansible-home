@@ -3,6 +3,7 @@
   command: ping -c 1 github.com -q
   register: result
   ignore_errors: yes
+  tags: git_check
 
 - name: transfer buitenlamps content
   git:
